@@ -8,6 +8,7 @@ import "express-async-errors";
 
 // Default Imports
 import user from "./routes/User";
+import Outboundcall from "./routes/Outboundcall";
 import health from "./routes/Health";
 import config from "./config/index";
 
@@ -45,6 +46,7 @@ app.use(HttpContextMiddleware.setHttpContextRequestPayload);
 app.use("*", [reqLog, checks, validate]);
 app.use("/v1/health", health);
 app.use("/v1/user", user);
+app.use("/v1/organisation/outbound-call", Outboundcall);
 
 // The error handler must be before any other error middleware and after all controllers
 app.use(Sentry.Handlers.errorHandler());

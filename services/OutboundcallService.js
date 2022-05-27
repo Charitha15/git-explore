@@ -48,3 +48,26 @@ export default async function initCall(orgId, { didId, number, userId }) {
   // eslint-disable-next-line no-return-await
   return await kookooService.initCall(call);
 }
+
+export async function didNumberList(orgId, query) {
+  log("info", { orgId, query });
+  const skip = Number(query.page || 0) * Number(query.page_size || 20);
+  const limit = skip + Number(query.page_size);
+  const org = await AbstractModels.mongoFindOne(Organisations, { organisation_id: orgId });
+  if (!org) throw ErrorUtil.createErrorMsg(ErrorType.ORGANISATION_NOT_EXISTS);
+  const dbQuery = { associatedOrganisation: org._id };
+  const total = await BusinessVirtualNumbers.count(dbQuery);
+  const items = await BusinessVirtualNumbers.find(dbQuery)
+    .skip(skip)
+    .limit(limit)
+    .exec();
+  const out = {
+    items,
+    metadata: {
+      total,
+      query,
+    },
+  };
+  log("info", out);
+  return out;
+}

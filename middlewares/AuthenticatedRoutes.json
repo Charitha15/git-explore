@@ -9,6 +9,29 @@
         "query": {},
         "body": {}
       }
+    },
+    "/v1/organisation/numbers/list/:OrgId":{
+      "eventType":"GET_DIDNUMBERS_LIST",
+      "roles": [
+        "user"
+      ],
+      "schema": {
+        "query": {
+          "$schema": "https://json-schema.org/draft-04/schema#",
+          "title": "GET_DIDNUMBERS_LIST_QUERY",
+          "properties": {
+            "pageNo":{
+              "type":"integer"
+            },
+            "pageSize":{
+              "type":"integer"
+            }
+          }
+        },
+        "body": {
+
+        }
+      }
     }
   },
   "POST": {},

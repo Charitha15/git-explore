@@ -1,6 +1,6 @@
 import * as outboundCallService from "../services/OutboundCallService";
 
-export default async function callInit(req, res, next) {
+export async function callInit(req, res, next) {
   const { organisationId } = req.params;
   // fetch and store the didID and number from the request body
   const { didId, number } = req.body;
@@ -14,6 +14,18 @@ export default async function callInit(req, res, next) {
     number,
   });
   res.data = {};
+  log("info", res.data);
+  next();
+}
+
+export async function didNumberList(req, res, next) {
+  const { organisationId } = req.params;
+  const { page, pageSize } = req.query;
+  log("info", { organisationId, page, pageSize });
+  const list = await outboundCallService.didNumberList(organisationId, {
+    page, pageSize,
+  });
+  res.data = list;
   log("info", res.data);
   next();
 }

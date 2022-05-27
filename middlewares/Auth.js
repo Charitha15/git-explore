@@ -268,6 +268,7 @@ export const setMetrics = (req, res) => {
   const { originalUrl } = req;
   const httpMethod = req.method;
   const routeObj = getRouteObj(originalUrl, httpMethod);
+  console.log("CHecking++++++++++++ "+JSON.stringify(routeObj));
   routeObj.startTime = new Date().getTime();
 
   let correlationId = req.get(Constants.LOGGER_CORRELATIONID);

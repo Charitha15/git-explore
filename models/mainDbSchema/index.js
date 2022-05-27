@@ -3,7 +3,7 @@ import ClientsSchema from "./ClientsSchema";
 import UsersSchema from "./UsersSchema";
 import OrganisationSchema from "./OrganisationSchema";
 import IVRVirtualprofileSchema from "./IVRVirtualprofileSchema";
-import BussinesscallSchema from "./BussinesscallsSchema";
+import BussinesscallSchema from "./BussinesscallSchema";
 import BusinessDIDNumbersSchema from "./BussinessDIDNumbersSchema";
 
 const conn = mainDbConnection.getDbInstance();

@@ -19,7 +19,8 @@ export async function callInit(req, res, next) {
 }
 
 export async function didNumberList(req, res, next) {
-  const { organisationId } = req.params;
+  const { param } = req.params;
+  const organisationId=param
   const { pageNo, pageSize } = req.query;
   // log("info", { organisationId, page, pageSize });
   console.log("/*/*/*/*/*//*/*/* the page number and size is"+pageNo,pageSize);

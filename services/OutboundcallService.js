@@ -3,7 +3,7 @@ import * as kookooService from "./KookooService";
 import * as ErrorUtil from "../errors/ErrorUtils";
 import * as ErrorType from "../constants/ErrorConstants";
 import * as AbstractModels from "../models/AbstractModels";
-import { Organisations, IVRVirtualProfile, BusinessDIDNumbers} from "../models/mainDbSchema/index";
+import { Organisations, IVRVirtualProfile, BusinessDIDNumbers ,BusinessVirtualNumbers} from "../models/mainDbSchema/index";
 
 export async function initCall(orgId, { didId, number, userId }) {
   log("info", {
@@ -50,7 +50,7 @@ export async function initCall(orgId, { didId, number, userId }) {
 }
 
 export async function didNumberList(orgId, query) {
-  log("info", { orgId, query });
+  console.log("++++++++++++ the organisation id is"+orgId)
   const skip = Number(query.pageNo || 0) * Number(query.pageSize || 20);
   const limit = skip + Number(query.pageSize);
   console.log("the value of the skip and limit are +++++++++++++++"+skip,limit);

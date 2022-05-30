@@ -3,7 +3,7 @@ import * as kookooService from "./KookooService";
 import * as ErrorUtil from "../errors/ErrorUtils";
 import * as ErrorType from "../constants/ErrorConstants";
 import * as AbstractModels from "../models/AbstractModels";
-import { Organisations, IVRVirtualProfile, BusinessDIDNumbers ,BusinessVirtualNumbers} from "../models/mainDbSchema/index";
+import { Organisations, IVRVirtualProfile, BusinessDIDNumbers ,BusinessVirtualNumbers, BusinessCalls} from "../models/mainDbSchema/index";
 
 export async function initCall(orgId, { didId, number, userId }) {
   log("info", {
@@ -84,4 +84,45 @@ export async function handleCall ({ callId }, data) {
 
   log('info', 'end');
   return handler(call, data);
+}
+
+export async function callLogList (orgId, query, { userId, role } = {}) {
+  // logToJSON('info', { orgId, query, userId, role });
+  const skip = (Number(query.page || 0) -1) * Number(query.page_size || 20);
+  const limit = Number(query.page_size || 20);
+  const dbQuery = { organisationId: orgId, isCallEnded: true };
+
+  if (userId && role === 'USER') {
+    const profile = await AbstractModels.mongoFindOne(IVRVirtualProfile, { user_id: userId });
+    if (!profile) throw ErrorUtil.createErrorMsg(ErrorType.USER_NOT_FOUND);
+    dbQuery.user = profile._id;
+  }
+
+  if (query.search_key && query.q) {
+    switch (query.search_key) {
+      case 'status':
+        dbQuery[query.search_key] = query.q;
+        break;
+      default:
+        dbQuery[query.search_key] = new RegExp(`.*${query.q}.*`);
+        break;
+    }
+  }
+
+  const total = await BusinessCalls.count(dbQuery);
+  const items = await BusinessCalls.find(dbQuery)
+    .populate('user', '_id zvr_name zvr_mobile_no')
+    .sort({ createdAt: -1 })
+    .skip(skip)
+    .limit(limit)
+    .exec();
+  const out = {
+    items,
+    metadata: {
+      total,
+      query
+    }
+  };
+  // logToJSON('info', out);
+  return out;
 }

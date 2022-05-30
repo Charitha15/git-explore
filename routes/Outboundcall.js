@@ -4,7 +4,7 @@ import * as outboundcallController from "../controllers/OutboundcallController";
 
 const router = Router();
 router.post("/init/:OrgId", withAsyncController(outboundcallController.callInit));
-router.get("/numbers/list/:OrgId", withAsyncController(outboundcallController.didNumbersList));
+router.get("/numbers/list/:param", withAsyncController(outboundcallController.didNumberList));
 
 
 module.exports=router;

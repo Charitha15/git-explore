@@ -3,9 +3,9 @@ import * as kookooService from "./KookooService";
 import * as ErrorUtil from "../errors/ErrorUtils";
 import * as ErrorType from "../constants/ErrorConstants";
 import * as AbstractModels from "../models/AbstractModels";
-import { Organisations, IVRVirtualProfile, BusinessVirtualNumbers } from "../models/mainDbSchema/index";
+import { Organisations, IVRVirtualProfile, BusinessDIDNumbers} from "../models/mainDbSchema/index";
 
-export default async function initCall(orgId, { didId, number, userId }) {
+export async function initCall(orgId, { didId, number, userId }) {
   log("info", {
     orgId, didId, number, userId,
   });
@@ -51,13 +51,15 @@ export default async function initCall(orgId, { didId, number, userId }) {
 
 export async function didNumberList(orgId, query) {
   log("info", { orgId, query });
-  const skip = Number(query.page || 0) * Number(query.page_size || 20);
-  const limit = skip + Number(query.page_size);
+  const skip = Number(query.pageNo || 0) * Number(query.pageSize || 20);
+  const limit = skip + Number(query.pageSize);
+  console.log("the value of the skip and limit are +++++++++++++++"+skip,limit);
   const org = await AbstractModels.mongoFindOne(Organisations, { organisation_id: orgId });
+  console.log('the organisaiton is ++++++++++'+JSON.stringify(org));
   if (!org) throw ErrorUtil.createErrorMsg(ErrorType.ORGANISATION_NOT_EXISTS);
   const dbQuery = { associatedOrganisation: org._id };
-  const total = await BusinessVirtualNumbers.count(dbQuery);
-  const items = await BusinessVirtualNumbers.find(dbQuery)
+  const total = await BusinessDIDNumbers.count(dbQuery);
+  const items = await BusinessDIDNumbers.find(dbQuery)
     .skip(skip)
     .limit(limit)
     .exec();

@@ -58,5 +58,19 @@ export async function callLogList (req, res, next) {
 
   res.data = list;
   // logToJSON('info', res.data);
+}
+export async function changeOutboundCallStatus (req, res, next) {
+  const { organisation_id } = req.params;
+  const data = req.body;
+  const opts = {
+    orgId: organisation_id,
+    role: req.session.users_business_portal_role,
+    userId: req.session.user_id
+  };
+  logToJSON('info', { organisation_id, data, opts });
+  const response = await outboundCallService.changeOutboundCallStatus(opts, data);
+  res.data = response;
+  logToJSON('info', res.data);
   next();
 }
+

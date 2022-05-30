@@ -3,7 +3,12 @@ import * as kookooService from "./KookooService";
 import * as ErrorUtil from "../errors/ErrorUtils";
 import * as ErrorType from "../constants/ErrorConstants";
 import * as AbstractModels from "../models/AbstractModels";
+<<<<<<< HEAD
 import { Organisations, IVRVirtualProfile, BusinessDIDNumbers ,BusinessVirtualNumbers, BusinessCalls} from "../models/mainDbSchema/index";
+=======
+import * as callEventHandlers from "./callEventService";
+import { Organisations, IVRVirtualProfile, BusinessVirtualNumbers, BusinessDIDNumbers } from "../models/mainDbSchema/index";
+>>>>>>> 179c61d39f9122469e2c049c29239bf1f38102ab
 
 export async function initCall(orgId, { didId, number, userId }) {
   log("info", {
@@ -125,4 +130,20 @@ export async function callLogList (orgId, query, { userId, role } = {}) {
   };
   // logToJSON('info', out);
   return out;
+}
+export async function changeOutboundCallStatus ({ orgId }, { userId, isOutboundCallEnabled }) {
+  logToJSON('info', { orgId, userId, isOutboundCallEnabled });
+  const org = await AbstractModels.mongoFindOne(Organisations, { organisation_id: orgId });
+  if (!org) throw ErrorUtil.createErrorMsg(ErrorType.ORGANISATION_NOT_EXISTS);
+
+  const profileQuery = { 'organisation.organisation_id': orgId, user_id: userId };
+  const profile = await AbstractModels.mongoFindOne(IVRVirtualProfile, profileQuery);
+  if (!profile) throw ErrorUtil.createErrorMsg(ErrorType.USER_NOT_FOUND);
+
+  await AbstractModels.mongoFindOneAndUpdate(IVRVirtualProfile, profileQuery, {
+    isOutboundCallEnabled
+  });
+
+  logToJSON('info', {});
+  return {};
 }

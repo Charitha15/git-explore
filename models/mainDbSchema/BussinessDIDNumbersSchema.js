@@ -9,5 +9,7 @@ const BusinessDIDNumbersSchema = new Schema({
   updatedAt: { type: Date, default: Date.now }
 });
 
-
+// const BusinessDIDNumbers = mongoose.model(
+//   'BusinessDIDNumbers', BusinessDIDNumbersSchema, 'BusinessDIDNumbers'
+// );
 export default BusinessDIDNumbersSchema;

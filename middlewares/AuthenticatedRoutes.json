@@ -59,6 +59,28 @@
   },
   "POST": {},
   "PUT": {
+    "/v1/organisation/outbound-call/user/status/:param":{
+      "eventType": "OUTBOUND_CALL_STATUS",
+      "roles": [
+        "user", "admin"
+      ],
+      "schema": {
+        "query": {},
+        "body": {
+          "$schema": "https://json-schema.org/draft-04/schema#",
+          "title": "UPDATE_USER_DETAILS_BODY",
+          "type": "object",
+          "properties": {
+            "userId": {
+              "type": "string"
+            },
+            "isOutboundCallEnabled": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    },
     "/v1/user/user-details": {
       "eventType": "UPDATE_USER_DETAILS",
       "roles": [

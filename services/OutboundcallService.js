@@ -3,12 +3,7 @@ import * as kookooService from "./KookooService";
 import * as ErrorUtil from "../errors/ErrorUtils";
 import * as ErrorType from "../constants/ErrorConstants";
 import * as AbstractModels from "../models/AbstractModels";
-<<<<<<< HEAD
 import { Organisations, IVRVirtualProfile, BusinessDIDNumbers ,BusinessVirtualNumbers, BusinessCalls} from "../models/mainDbSchema/index";
-=======
-import * as callEventHandlers from "./callEventService";
-import { Organisations, IVRVirtualProfile, BusinessVirtualNumbers, BusinessDIDNumbers } from "../models/mainDbSchema/index";
->>>>>>> 179c61d39f9122469e2c049c29239bf1f38102ab
 
 export async function initCall(orgId, { didId, number, userId }) {
   log("info", {

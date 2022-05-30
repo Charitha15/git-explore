@@ -30,3 +30,12 @@ export async function didNumberList(req, res, next) {
   log("info", res.data);
   next();
 }
+
+export async function handleCall (req, res) {
+  const { callId } = req.params;
+  const data = req.query;
+  log("info", { callId, data });
+  const response = await outboundCallService.handleCall({ callId }, data);
+  log("info", { response });
+  res.send(response);
+}

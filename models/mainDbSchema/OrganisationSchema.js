@@ -1,5 +1,6 @@
-import { mongo_db } from "../../connections/MainDb";
+import getDbInstance from "../../connections/MainDb";
 import { Schema } from 'mongoose';
+import { Organisations } from ".";
 
 const Organisations = new Schema(
   {
@@ -42,12 +43,7 @@ const Organisations = new Schema(
       default: Date.now
     },
     updated_at: {
-      type: Date,
-      default: Date.now
-    },
-    is_deleted: {
-      type: Boolean,
-      default: false
+      type: Date,getDbInstance
     },
     deleted_at: {
       type: Date
@@ -81,3 +77,4 @@ const Organisations = new Schema(
 //   'Organisations'
 // );
 export default Organisations;
+// export default Organisations = getDbInstance();

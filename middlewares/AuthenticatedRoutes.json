@@ -10,13 +10,23 @@
         "body": {}
       }
     },
-    "v1/organisation/outbound-call/external/call/handle": {
-
+    "v1/organisation/outbound-call/external/call/handle/:params": {
+      "eventType":"CALL_HANDLE",
+      "roles":[
+        "user","admin"
+      ],
+      "schema":{
+        "query":{
+          "$schema": "https://json-schema.org/draft-04/schema#",
+          "title": "CALL_HANDLE"
+        },
+        "body": {}
+      }
     },
     "/v1/organisation/outbound-call/numbers/list/:param":{
       "eventType":"GET_DIDNUMBERS_LIST",
       "roles": [
-        "user"
+        "user","admin"
       ],
       "schema": {
         "query": {

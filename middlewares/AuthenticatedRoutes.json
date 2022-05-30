@@ -10,7 +10,10 @@
         "body": {}
       }
     },
-    "/v1/organisation/numbers/list/:OrgId":{
+    "v1/organisation/outbound-call/external/call/handle": {
+
+    },
+    "/v1/organisation/outbound-call/numbers/list/:param":{
       "eventType":"GET_DIDNUMBERS_LIST",
       "roles": [
         "user"

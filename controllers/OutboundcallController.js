@@ -1,4 +1,4 @@
-import * as outboundCallService from "../services/OutboundCallService";
+import * as outboundCallService from "../services/OutboundcallService";
 
 export async function callInit(req, res, next) {
   const { organisationId } = req.params;
@@ -28,4 +28,13 @@ export async function didNumberList(req, res, next) {
   res.data = list;
   log("info", res.data);
   next();
+}
+
+export async function handleCall (req, res) {
+  const { callId } = req.params;
+  const data = req.query;
+  log("info", { callId, data });
+  const response = await outboundCallService.handleCall({ callId }, data);
+  log("info", { response });
+  res.send(response);
 }

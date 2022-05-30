@@ -6,7 +6,7 @@ import * as AbstractModels from "../models/AbstractModels";
 import * as callEventHandlers from "./callEventService";
 import { Organisations, IVRVirtualProfile, BusinessVirtualNumbers, BusinessDIDNumbers } from "../models/mainDbSchema/index";
 
-export default async function initCall(orgId, { didId, number, userId }) {
+export async function initCall(orgId, { didId, number, userId }) {
   log("info", {
     orgId, didId, number, userId,
   });
@@ -52,9 +52,11 @@ export default async function initCall(orgId, { didId, number, userId }) {
 
 export async function didNumberList(orgId, query) {
   log("info", { orgId, query });
-  const skip = Number(query.page || 0) * Number(query.page_size || 20);
-  const limit = skip + Number(query.page_size);
+  const skip = Number(query.pageNo || 0) * Number(query.pageSize || 20);
+  const limit = skip + Number(query.pageSize);
+  console.log("the value of the skip and limit are +++++++++++++++"+skip,limit);
   const org = await AbstractModels.mongoFindOne(Organisations, { organisation_id: orgId });
+  console.log('the organisaiton is ++++++++++'+JSON.stringify(org));
   if (!org) throw ErrorUtil.createErrorMsg(ErrorType.ORGANISATION_NOT_EXISTS);
   const dbQuery = { associatedOrganisation: org._id };
   const total = await BusinessDIDNumbers.count(dbQuery);

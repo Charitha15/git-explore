@@ -20,10 +20,11 @@ export async function callInit(req, res, next) {
 
 export async function didNumberList(req, res, next) {
   const { organisationId } = req.params;
-  const { page, pageSize } = req.query;
-  log("info", { organisationId, page, pageSize });
+  const { pageNo, pageSize } = req.query;
+  // log("info", { organisationId, page, pageSize });
+  console.log("/*/*/*/*/*//*/*/* the page number and size is"+pageNo,pageSize);
   const list = await outboundCallService.didNumberList(organisationId, {
-    page, pageSize,
+    pageNo, pageSize,
   });
   res.data = list;
   log("info", res.data);

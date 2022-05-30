@@ -1,6 +1,6 @@
 import getDbInstance from "../../connections/MainDb";
 import { Schema } from 'mongoose';
-import { Organisations } from ".";
+// import { Organisations } from ".";
 
 const Organisations = new Schema(
   {

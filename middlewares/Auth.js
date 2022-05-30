@@ -17,6 +17,7 @@ import {
 import {
   HEADER_API_KEY, HEADER_SESSION_TOKEN,
 } from "../constants/Keys";
+import { deprecate } from "util";
 
 const httpContext = require("express-http-context");
 
@@ -92,8 +93,8 @@ const getRedisSession = async (sessionId) => {
 
 const decrypt = (text) => {
   let resultChiper = "";
-  // eslint-disable-next-line
   const decipher = crypto.createDecipher(ALGORITHM, PASSWORD);
+  console.log("+++++++++++++ length is "+ text,text.length);
   resultChiper = decipher.update(text, "hex", "utf8");
   resultChiper += decipher.final("utf8");
   return resultChiper;
@@ -116,6 +117,7 @@ export const getSessionObj = async (req) => {
   } catch (error) {
     throw ErrorUtils.InvalidSessionToken();
   }
+  console.log("the returned value formthe session is +++++++++++++++"+session);
   return session;
 };
 const getRouteObj = (originalUrl, httpMethod) => {
@@ -161,12 +163,15 @@ const getRouteObj = (originalUrl, httpMethod) => {
 // Possible values for users_business_portal_role are "admin" & "user"
 async function getUserRoles(req) {
   const session = await getSessionObj(req);
+  console.log('*****************************'+JSON.stringify(session));
   const { users_business_portal_role: userRoles } = session;
+  console.log("+++++++++++ the role of user is "+JSON.stringify(userRoles))
   return [].concat(userRoles).map((value) => value.toUpperCase());
 }
 
 const checkAutorization = async (req) => {
   let isAuthorizedToAccessRoute = false;
+  console.log("in the check authorization rule--------------------------");
   const userRoles = await getUserRoles(req);
   const routeAutorizedRoles = req.routeObj?.roles || [];
   if (routeAutorizedRoles?.filter((value) => userRoles.includes(value.toUpperCase()))?.length > 0) {
@@ -219,6 +224,7 @@ For each req store req, res audits
 
 export const checks = async (req, res, next) => {
   const { routeCategory } = req.routeObj;
+  console.log("++++++++++++++++++++++++THIS IS ROUTE CATEGORY          "+routeCategory);
   if (routeCategory === "others") {
     const error = ErrorUtils.InvalidRequest();
     next(error);
@@ -246,6 +252,7 @@ export const checks = async (req, res, next) => {
       next(error);
     } else {
       const isAuthorizedToAccessRoute = await checkAutorization(req);
+      console.log('***************** is authorized user '+isAuthorizedToAccessRoute);
       const isBlockListeduser = await checkBlockListedUser();
       if (!isValidAPIKey) {
         const error = ErrorUtils.InvalidAPIKey();

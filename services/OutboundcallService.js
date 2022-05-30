@@ -4,7 +4,7 @@ import * as ErrorUtil from "../errors/ErrorUtils";
 import * as ErrorType from "../constants/ErrorConstants";
 import * as AbstractModels from "../models/AbstractModels";
 import * as callEventHandlers from "./callEventService";
-import { Organisations, IVRVirtualProfile, BusinessVirtualNumbers } from "../models/mainDbSchema/index";
+import { Organisations, IVRVirtualProfile, BusinessVirtualNumbers, BusinessDIDNumbers } from "../models/mainDbSchema/index";
 
 export default async function initCall(orgId, { didId, number, userId }) {
   log("info", {
@@ -57,8 +57,8 @@ export async function didNumberList(orgId, query) {
   const org = await AbstractModels.mongoFindOne(Organisations, { organisation_id: orgId });
   if (!org) throw ErrorUtil.createErrorMsg(ErrorType.ORGANISATION_NOT_EXISTS);
   const dbQuery = { associatedOrganisation: org._id };
-  const total = await BusinessVirtualNumbers.count(dbQuery);
-  const items = await BusinessVirtualNumbers.find(dbQuery)
+  const total = await BusinessDIDNumbers.count(dbQuery);
+  const items = await BusinessDIDNumbers.find(dbQuery)
     .skip(skip)
     .limit(limit)
     .exec();
@@ -83,4 +83,21 @@ export async function handleCall ({ callId }, data) {
 
   log('info', 'end');
   return handler(call, data);
+}
+
+export async function changeOutboundCallStatus ({ orgId }, { userId, isOutboundCallEnabled }) {
+  logToJSON('info', { orgId, userId, isOutboundCallEnabled });
+  const org = await AbstractModels.mongoFindOne(Organisations, { organisation_id: orgId });
+  if (!org) throw ErrorUtil.createErrorMsg(ErrorType.ORGANISATION_NOT_EXISTS);
+
+  const profileQuery = { 'organisation.organisation_id': orgId, user_id: userId };
+  const profile = await AbstractModels.mongoFindOne(IVRVirtualProfile, profileQuery);
+  if (!profile) throw ErrorUtil.createErrorMsg(ErrorType.USER_NOT_FOUND);
+
+  await AbstractModels.mongoFindOneAndUpdate(IVRVirtualProfile, profileQuery, {
+    isOutboundCallEnabled
+  });
+
+  logToJSON('info', {});
+  return {};
 }

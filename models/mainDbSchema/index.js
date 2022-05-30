@@ -16,3 +16,4 @@ export const Organisations = conn.model("Organisations", OrganisationSchema, "Or
 export const IVRVirtualProfile = conn.model("IVRVirtualProfile", IVRVirtualprofileSchema, "IVRVirtualProfile");
 export const BusinessCalls = conn.model("BusinessCalls", BussinesscallSchema, "BusinessCalls");
 export const BusinessVirtualNumbers = conn.model("BusinessVirtualNumbers", BusinessDIDNumbersSchema, "BusinessVirtualNumbers");
+export const BusinessDIDNumbers = conn.model("BusinessDIDNumbers",BusinessDIDNumbersSchema,"BusinessDIDNumbers");

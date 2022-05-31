@@ -58,6 +58,7 @@ export async function callLogList (req, res, next) {
 
   res.data = list;
   // logToJSON('info', res.data);
+  next();
 }
 export async function changeOutboundCallStatus (req, res, next) {
   const { organisation_id } = req.params;

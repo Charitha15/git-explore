@@ -1,5 +1,4 @@
 import { Router } from "express";
-import { route } from "express/lib/router";
 import  withAsyncController  from "../commons/util/common";
 import * as outboundcallController from "../controllers/OutboundcallController";
 

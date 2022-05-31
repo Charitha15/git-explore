@@ -20,10 +20,37 @@
           "$schema": "https://json-schema.org/draft-04/schema#",
           "title": "GET_DIDNUMBERS_LIST_QUERY",
           "properties": {
-            "pageNo":{
+            "outbound_sid":{
+              "type":"string"
+            },
+            "cid":{
+              "type":"string"
+            },
+            "cid_type":{
+              "type":"string"
+            },
+            "operator":{
+              "type":"string"
+            },
+            "circle":{
+              "type":"string"
+            },
+            "cid_countryname":{
+              "type":"string"
+            },
+            "cid_country":{
               "type":"integer"
             },
-            "pageSize":{
+            "sid":{
+              "type":"integer"
+            },
+            "request_time":{
+              "type":"integer"
+            },
+            "cid_e164":{
+              "type":"integer"
+            },
+            "event":{
               "type":"integer"
             }
           }

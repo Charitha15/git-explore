@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { mongo_db } from '../connections/mongo_db';
+=======
+import getDbInstance from "../../connections/MainDb";
+>>>>>>> 5534b9b8cd58c3a5067a2c6b02379efe7d2a6544
 import { Schema } from 'mongoose';
 
 const FcmTokenSchema = new Schema({
@@ -325,11 +329,6 @@ const IVRVirtualProfileSchema = new Schema({
 IVRVirtualProfileSchema.index({ v_mobile_no: 1 });
 IVRVirtualProfileSchema.index({ 'organisation.organisation_id': 1 });
 
-// const IVRVirtualProfile = mongo_db.model(
-//   'IVRVirtualProfile',
-//   IVRVirtualProfileSchema,
-//   'IVRVirtualProfile'
-// );
 export default IVRVirtualProfileSchema;
 
 /*

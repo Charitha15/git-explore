@@ -71,12 +71,7 @@ export async function changeOutboundCallStatus (req, res, next) {
     role: sessionObj.users_business_portal_role,
     userId: sessionObj.user_id
   };
-  // const opts = {
-  //   orgId: organisation_id,
-  //   role: req.session.users_business_portal_role,
-  //   userId: req.session.user_id
-  // };
-  console.log("info++++++++++++++++++++++++++++"+organisation_id);
+  console.log("++++++++++++++ the opts are "+JSON.stringify(opts))
   log('info', { organisation_id, data, opts });
   const response = await outboundCallService.changeOutboundCallStatus(opts, data);
   res.data = response;

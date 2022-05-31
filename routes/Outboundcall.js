@@ -7,5 +7,6 @@ router.post("/init/:param", withAsyncController(outboundcallController.callInit)
 router.get("/external/call/handle/:param", withAsyncController(outboundcallController.handleCall));
 router.get("/numbers/list/:param", withAsyncController(outboundcallController.didNumberList));
 router.put("/user/status", withAsyncController(outboundcallController.changeOutboundCallStatus))
+router.get("/call-log/list/:param",withAsyncController(outboundcallController.callLogList));
 
 module.exports=router;

@@ -59,6 +59,29 @@
 
         }
       }
+    },
+    "/v1/organisation/outbound-call/call-log/list/:param":{
+      "eventType":"GET_CALL_LOGS",
+      "roles": [
+        "user","admin"
+      ],
+      "schema": {
+        "query": {
+          "$schema": "https://json-schema.org/draft-04/schema#",
+          "title": "GET_CALL_LOGS_QUERY",
+          "properties": {
+            "pageNo":{
+              "type":"integer"
+            },
+            "pageSize":{
+              "type":"integer"
+            }
+          }
+        },
+        "body": {
+
+        }
+      }
     }
   },
   "POST": {},

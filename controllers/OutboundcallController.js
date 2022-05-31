@@ -1,4 +1,5 @@
 import * as outboundCallService from "../services/OutboundcallService";
+import * as Auth from "../middlewares/Auth";
 
 export async function callInit(req, res, next) {
   const { organisationId } = req.params;
@@ -41,6 +42,23 @@ export async function handleCall (req, res) {
   res.send(response);
 }
 
+
+export async function callLogList (req, res, next) {
+  const { param } = req.params;
+  const organisationId=param;
+  const { pageNo, pageSize, search_key, q } = req.query;
+  const sessionObj = await Auth.getSessionObj(req);
+  const opts = {
+    role: sessionObj.users_business_portal_role,
+    userId: sessionObj.user_id
+  };
+  const list = await outboundCallService.callLogList(organisationId, {
+    page: pageNo, page_size: pageSize, search_key, q
+  }, opts);
+
+  res.data = list;
+  // logToJSON('info', res.data);
+}
 export async function changeOutboundCallStatus (req, res, next) {
   const { organisation_id } = req.params;
   const data = req.body;
@@ -55,3 +73,4 @@ export async function changeOutboundCallStatus (req, res, next) {
   logToJSON('info', res.data);
   next();
 }
+

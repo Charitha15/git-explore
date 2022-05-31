@@ -54,7 +54,7 @@
               "type":"string"
             },
             "event":{
-              "type":"integer"
+              "type":"string"
             }
           }
         },

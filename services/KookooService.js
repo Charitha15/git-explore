@@ -19,3 +19,22 @@ export default async function initCall({ _id, didNumber, initiatorNumber }) {
   log("info", "end");
   return axios.default.get(API_URL.href);
 }
+export async function outgoingCallResponse ({ destinationNumber }) {
+  log('info', 'start');
+  const out = '<?xml version="1.0" encoding="UTF-8"?>' +
+    '<response>' +
+    `<dial record="true" limittime="1000" timeout="30" moh="ring" >${destinationNumber}</dial>` +
+    '</response>';
+  log('info', out);
+  return out;
+}
+
+export async function hangupResponse () {
+  log('info', 'start');
+  const out = '<?xml version="1.0" encoding="UTF-8"?>' +
+    '<response>' +
+    '<hangup></hangup>' +
+    '</response>';
+  log('info', out);
+  return out;
+}

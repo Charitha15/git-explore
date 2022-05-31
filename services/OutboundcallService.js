@@ -76,6 +76,7 @@ export async function didNumberList(orgId, query) {
 
 export async function handleCall ({ callId }, data) {
   log('info', { callId, data });
+  console.log(callId);
   const call = await AbstractModels.mongoFindOne(BusinessCalls, { _id: ObjectId(callId) });
   if (!call) throw ErrorUtil.createErrorMsg(ErrorType.BUSINESS_DID_NUMBER_NOT_FOUND);
 
@@ -127,7 +128,7 @@ export async function callLogList (orgId, query, { userId, role } = {}) {
   return out;
 }
 export async function changeOutboundCallStatus ({ orgId }, { userId, isOutboundCallEnabled }) {
-  logToJSON('info', { orgId, userId, isOutboundCallEnabled });
+  log('info', { orgId, userId, isOutboundCallEnabled });
   const org = await AbstractModels.mongoFindOne(Organisations, { organisation_id: orgId });
   if (!org) throw ErrorUtil.createErrorMsg(ErrorType.ORGANISATION_NOT_EXISTS);
 
@@ -139,6 +140,6 @@ export async function changeOutboundCallStatus ({ orgId }, { userId, isOutboundC
     isOutboundCallEnabled
   });
 
-  logToJSON('info', {});
+  log('info', {});
   return {};
 }

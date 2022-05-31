@@ -10,8 +10,8 @@
         "body": {}
       }
     },
-    "/v1/organisation/outbound-call/numbers/list/:param":{
-      "eventType":"GET_DIDNUMBERS_LIST",
+    "/v1/organisation/outbound-call/external/call/handle/:param": {
+      "eventType": "OUTBOUNDCALL_HANDLE",
       "roles": [
         "user","admin"
       ],
@@ -19,7 +19,7 @@
         "query": {
           "$schema": "https://json-schema.org/draft-04/schema#",
           "title": "GET_DIDNUMBERS_LIST_QUERY",
-          "properties": {
+          "properties":{
             "outbound_sid":{
               "type":"string"
             },
@@ -39,18 +39,42 @@
               "type":"string"
             },
             "cid_country":{
-              "type":"integer"
+              "type":"string"
+            },
+            "called_number":{
+              "type":"string"
             },
             "sid":{
-              "type":"integer"
+              "type":"string"
             },
             "request_time":{
-              "type":"integer"
+              "type":"string"
             },
             "cid_e164":{
-              "type":"integer"
+              "type":"string"
             },
             "event":{
+              "type":"integer"
+            }
+          }
+        },
+        "body": {}
+      }
+    },
+    "/v1/organisation/outbound-call/numbers/list/:param":{
+      "eventType":"GET_DIDNUMBERS_LIST",
+      "roles": [
+        "user","admin"
+      ],
+      "schema": {
+        "query": {
+          "$schema": "https://json-schema.org/draft-04/schema#",
+          "title": "GET_DIDNUMBERS_LIST_QUERY",
+          "properties": {
+            "pageNo":{
+              "type":"integer"
+            },
+            "pageSize":{
               "type":"integer"
             }
           }

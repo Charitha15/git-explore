@@ -34,7 +34,8 @@ export async function didNumberList(req, res, next) {
 }
 
 export async function handleCall (req, res) {
-  const { callId } = req.params;
+  const { param } = req.params;
+  const callId = param;
   const data = req.query;
   log("info", { callId, data });
   const response = await outboundCallService.handleCall({ callId }, data);
@@ -58,19 +59,28 @@ export async function callLogList (req, res, next) {
 
   res.data = list;
   // logToJSON('info', res.data);
+  next();
 }
 export async function changeOutboundCallStatus (req, res, next) {
-  const { organisation_id } = req.params;
+  const { param } = req.params;
+  const organisation_id = param;
   const data = req.body;
+  const sessionObj = await Auth.getSessionObj(req);
   const opts = {
     orgId: organisation_id,
-    role: req.session.users_business_portal_role,
-    userId: req.session.user_id
+    role: sessionObj.users_business_portal_role,
+    userId: sessionObj.user_id
   };
-  logToJSON('info', { organisation_id, data, opts });
+  // const opts = {
+  //   orgId: organisation_id,
+  //   role: req.session.users_business_portal_role,
+  //   userId: req.session.user_id
+  // };
+  console.log("info++++++++++++++++++++++++++++"+organisation_id);
+  log('info', { organisation_id, data, opts });
   const response = await outboundCallService.changeOutboundCallStatus(opts, data);
   res.data = response;
-  logToJSON('info', res.data);
+  log('info', res.data);
   next();
 }
 

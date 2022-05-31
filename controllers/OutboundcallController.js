@@ -1,5 +1,6 @@
 import * as outboundCallService from "../services/OutboundcallService";
 import * as Auth from "../middlewares/Auth";
+import { Console } from "winston/lib/winston/transports";
 
 export async function callInit(req, res, next) {
   const { organisationId } = req.params;
@@ -52,25 +53,31 @@ export async function callLogList (req, res, next) {
     role: sessionObj.users_business_portal_role,
     userId: sessionObj.user_id
   };
+  console.log("++++++++++++++++++opts"+JSON.stringify(opts));
   const list = await outboundCallService.callLogList(organisationId, {
     page: pageNo, page_size: pageSize, search_key, q
   }, opts);
-
+  console.log("++++++++++++++++list"+list);
   res.data = list;
   // logToJSON('info', res.data);
+  next();
 }
 export async function changeOutboundCallStatus (req, res, next) {
-  const { organisation_id } = req.params;
+ // const { organisation_id } = req.params;
+  const { param } = req.params;
+  const organisation_id = param;
   const data = req.body;
+  const sessionObj = await Auth.getSessionObj(req);
+  console.log("CHECKING SESSION"+JSON.stringify(sessionObj));
   const opts = {
     orgId: organisation_id,
-    role: req.session.users_business_portal_role,
-    userId: req.session.user_id
+    role: sessionObj.users_business_portal_role,
+    userId: sessionObj.user_id
   };
-  logToJSON('info', { organisation_id, data, opts });
+  console.log('info+++++++++++++', { organisation_id, data, opts });
   const response = await outboundCallService.changeOutboundCallStatus(opts, data);
   res.data = response;
-  logToJSON('info', res.data);
+  log('info', res.data);
   next();
 }
 

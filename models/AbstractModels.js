@@ -8,6 +8,7 @@ export const mongoFindOne = async (
     .select(selectCondition)
     .lean()
     .exec();
+  console.log("===== from the mongo find one "+JSON.stringify(result));
   return result;
 };
 

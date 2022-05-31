@@ -65,18 +65,22 @@ const getRouteCategory = (routeMapsIndex) => {
 
 const checkApiKeyValidity = async (req) => {
   const apiKey = req.header(HEADER_API_KEY);
+  console.log("******************"+apiKey);
   const selectCondition = {
     metro_auth_key: apiKey,
   };
+  console.log("+++++++++++++++++++"+JSON.stringify(selectCondition));
   const projectCondition = {
     metro_auth_key: 1,
     _id: 0,
   };
+  console.log("+++++++++++++++++++"+JSON.stringify(projectCondition));
   const isValidAPIKey = await AbstractModels.mongoFindOne(
     Clients,
     selectCondition,
     projectCondition,
   );
+  console.log("********************"+isValidAPIKey);
   return isValidAPIKey;
 };
 

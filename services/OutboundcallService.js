@@ -127,18 +127,19 @@ export async function callLogList (orgId, query, { userId, role } = {}) {
   return out;
 }
 export async function changeOutboundCallStatus ({ orgId }, { userId, isOutboundCallEnabled }) {
-  logToJSON('info', { orgId, userId, isOutboundCallEnabled });
+  log('info', { orgId, userId, isOutboundCallEnabled });
   const org = await AbstractModels.mongoFindOne(Organisations, { organisation_id: orgId });
   if (!org) throw ErrorUtil.createErrorMsg(ErrorType.ORGANISATION_NOT_EXISTS);
 
   const profileQuery = { 'organisation.organisation_id': orgId, user_id: userId };
+  console.log("=========== the profiile query is "+JSON.stringify(profileQuery))
   const profile = await AbstractModels.mongoFindOne(IVRVirtualProfile, profileQuery);
   if (!profile) throw ErrorUtil.createErrorMsg(ErrorType.USER_NOT_FOUND);
-
+  console.log("CHECKING PROFILE OF USER"+JSON.stringify(profile));
   await AbstractModels.mongoFindOneAndUpdate(IVRVirtualProfile, profileQuery, {
     isOutboundCallEnabled
   });
 
-  logToJSON('info', {});
+  log('info', {});
   return {};
 }

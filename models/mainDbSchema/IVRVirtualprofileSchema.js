@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import { mongo_db } from '../connections/mongo_db';
-=======
 import getDbInstance from "../../connections/MainDb";
->>>>>>> 5534b9b8cd58c3a5067a2c6b02379efe7d2a6544
 import { Schema } from 'mongoose';
 
 const FcmTokenSchema = new Schema({

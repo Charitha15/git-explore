@@ -224,7 +224,7 @@ For each req store req, res audits
 
 export const checks = async (req, res, next) => {
   const { routeCategory } = req.routeObj;
-  // console.log("++++++++++++++++++++++++THIS IS ROUTE CATEGORY          "+routeCategory);
+  console.log("++++++++++++++++++++++++THIS IS ROUTE CATEGORY          "+routeCategory);
   if (routeCategory === "others") {
     const error = ErrorUtils.InvalidRequest();
     next(error);

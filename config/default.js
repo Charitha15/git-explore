@@ -9,4 +9,5 @@ export default {
     connString: "redis://localhost:6379",
   },
   sentry_dsn: process.env.SENTRY_DSN,
+  application_url:"http://localhost:4000"
 };

@@ -108,7 +108,30 @@
       }
     }
   },
-  "POST": {},
+  "POST": {
+    "/v1/organisation/outbound-call/init/:param":{
+      "eventType": "CALL_INIT_EVENT",
+      "roles": [
+        "user", "admin"
+      ],
+      "schema": {
+        "query": {},
+        "body": {
+          "$schema": "https://json-schema.org/draft-04/schema#",
+          "title": "CALL_INIT_BODY",
+          "type": "object",
+          "properties": {
+            "didId": {
+              "type": "string"
+            },
+            "number": {
+              "type": "string"
+            }
+          }
+        }
+      }
+  }
+},
   "PUT": {
     "/v1/organisation/outbound-call/user/status/:param":{
       "eventType": "OUTBOUND_CALL_STATUS",

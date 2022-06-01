@@ -102,7 +102,8 @@ export const mongoDeleteMany = async (col, findCondition) => {
 
 export const mongoInsertOne = async (col, doc) => {
   const moongooseDoc = col(doc);
-  await moongooseDoc.save();
+  const result = await moongooseDoc.save();
+  return result;
 };
 
 export const mongoInsertMany = async (col, docs) => {

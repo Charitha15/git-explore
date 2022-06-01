@@ -121,12 +121,17 @@ export const mongoFindOneAndUpdate = async (
   updateCondition,
   returnCondition,
 ) => {
+  console.log("+++++ the col is"+JSON.stringify(col));
+  console.log("+++++ the find cond  is"+JSON.stringify(findCondition));
+  console.log("+++++ the update cond  is"+JSON.stringify(updateCondition));
   const result = await col.findOneAndUpdate(
     findCondition,
     updateCondition,
     returnCondition,
   );
+  console.log("+++++++++++++++++++FIND AND UPDATE"+ result);
   return result;
+  
 };
 
 export const mongoFindOneAndRemove = async (col, findCondition) => {

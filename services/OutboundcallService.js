@@ -3,6 +3,8 @@ import * as kookooService from "./KookooService";
 import * as ErrorUtil from "../errors/ErrorUtils";
 import * as ErrorType from "../constants/ErrorConstants";
 import * as AbstractModels from "../models/AbstractModels";
+import * as callEventHandlers from "./callEventService";
+import { ObjectId } from 'mongodb';
 import { Organisations, IVRVirtualProfile, BusinessDIDNumbers ,BusinessVirtualNumbers, BusinessCalls} from "../models/mainDbSchema/index";
 
 export async function initCall(orgId, { didId, number, userId }) {
@@ -76,10 +78,13 @@ export async function didNumberList(orgId, query) {
 
 export async function handleCall ({ callId }, data) {
   log('info', { callId, data });
+ // console.log(ObjectId(callId));
   const call = await AbstractModels.mongoFindOne(BusinessCalls, { _id: ObjectId(callId) });
+  console.log("++++++++call data"+JSON.stringify(call));
   if (!call) throw ErrorUtil.createErrorMsg(ErrorType.BUSINESS_DID_NUMBER_NOT_FOUND);
 
   const handler = callEventHandlers[data.event];
+  console.log("CHECKING HANDLER"+handler);
   if (!handler) throw ErrorUtil.createErrorMsg(ErrorType.BUSINESS_OUTBOUND_CALL_EVENT_HANDLER_NOT_FOUND);
 
   log('info', 'end');

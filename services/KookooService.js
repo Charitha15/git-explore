@@ -7,7 +7,7 @@ export default async function initCall({ _id, didNumber, initiatorNumber }) {
   const axios = require("axios");
   const apiKey = "KK232c980690c3cd35bc9ce18db9477d8b";
   const applicationUrl = new URL(config.application_url);
-  const url = `${applicationUrl.origin}/business/outbound-call/external/call/handle/${_id}`;
+  const url = `${applicationUrl.origin}/outbound-call/external/call/handle/${_id}`;
   log("info", url);
   const API_URL = new URL("http://kookoo.in/outbound/outbound.php");
   API_URL.searchParams.set("api_key", apiKey);
@@ -18,4 +18,24 @@ export default async function initCall({ _id, didNumber, initiatorNumber }) {
 
   log("info", "end");
   return axios.default.get(API_URL.href);
+}
+export async function outgoingCallResponse ({ destinationNumber }) {
+  console.log("DESTINATION NUMBER"+destinationNumber);
+  log('info', 'start');
+  const out = '<?xml version="1.0" encoding="UTF-8"?>' +
+    '<response>' +
+    `<dial record="true" limittime="1000" timeout="30" moh="ring" >${destinationNumber}</dial>` +
+    '</response>';
+  log('info', out);
+  return out;
+}
+
+export async function hangupResponse () {
+  log('info', 'start');
+  const out = '<?xml version="1.0" encoding="UTF-8"?>' +
+    '<response>' +
+    '<hangup></hangup>' +
+    '</response>';
+  log('info', out);
+  return out;
 }

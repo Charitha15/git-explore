@@ -5,7 +5,7 @@ import { ObjectId } from 'mongodb';
 import * as ErrorType from "../constants/ErrorConstants";
 import * as AbstractModels from "../models/AbstractModels";
 import * as callEventHandlers from "./callEventService";
-import { Organisations, IVRVirtualProfile, BusinessDIDNumbers ,BusinessVirtualNumbers, BusinessCalls} from "../models/mainDbSchema/index";
+import { Organisations, IVRVirtualProfile, BusinessDIDNumbers , BusinessCalls} from "../models/mainDbSchema/index";
 
 export async function initCall(orgId, { didId, number, userId }) {
   log("info", {
@@ -15,7 +15,7 @@ export async function initCall(orgId, { didId, number, userId }) {
   const org = await AbstractModels.mongoFindOne(Organisations, { organisation_id: orgId });
   console.log("++++++++++++++++++++++++ the organisaiton is "+org);
   if (!org) throw ErrorUtil.createErrorMsg(ErrorType.ORGANISATION_NOT_EXISTS);
-  const didNumber = await AbstractModels.mongoFindOne(BusinessVirtualNumbers, {
+  const didNumber = await AbstractModels.mongoFindOne(BusinessDIDNumbers, {
     _id: ObjectId(didId),
     associatedOrganisation: org._id,
   });

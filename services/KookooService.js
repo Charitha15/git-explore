@@ -18,7 +18,6 @@ export async function initCall({ _id, didNumber, initiatorNumber }) {
   API_URL.searchParams.set("url", url);
 
   log("info", "end");
-  console.log("+++++++++++++ the axios res "+axios.default.get(API_URL.href))
   return axios.default.get(API_URL.href);
 }
 export async function outgoingCallResponse ({ destinationNumber }) {

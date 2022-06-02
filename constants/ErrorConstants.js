@@ -77,3 +77,19 @@ export const REDIS_CONNECTION_ERROR = {
   code: 1018,
   message: "Redis connection error",
 };
+export const ORGANISATION_NOT_EXISTS =
+{
+  code :1019,
+  messsage:"Organisation does not exists"
+}
+
+export const BUSINESS_DID_NUMBER_NOT_FOUND =
+{
+  code :1020,
+  messsage:"Business DID Number Is Not Found"
+}
+export const BUSINESS_DID_NUMBER_UNABLE_CALL_SAME_NO=
+{
+  code : 1021,
+  message:"Unable To Call The Same Business DID Number"
+}

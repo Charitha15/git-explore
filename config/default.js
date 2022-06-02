@@ -8,6 +8,7 @@ export default {
   redisConfig: {
     connString: "redis://localhost:6379",
   },
-  application_url : ' https://0f77-111-93-26-74.in.ngrok.io/v1/organisation/outbound-call',
+  application_url : 'https://91be-111-93-26-74.in.ngrok.io/v1/organisation/outbound-call',
   sentry_dsn: process.env.SENTRY_DSN,
+  //application_url:"http://localhost:4000"
 };

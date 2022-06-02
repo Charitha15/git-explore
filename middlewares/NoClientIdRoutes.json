@@ -1,4 +1,56 @@
 {
-  "GET": {},
+  "GET": {
+    "/v1/organisation/outbound-call/external/call/handle/:param": {
+      "eventType": "OUTBOUNDCALL_HANDLE",
+      "roles": [
+        "user","admin"
+      ],
+      "schema": {
+        "query": {
+          "$schema": "https://json-schema.org/draft-04/schema#",
+          "title": "CALL_HANDLE",
+          "properties":{
+            "outbound_sid":{
+              "type":"string"
+            },
+            "cid":{
+              "type":"string"
+            },
+            "cid_type":{
+              "type":"string"
+            },
+            "operator":{
+              "type":"string"
+            },
+            "circle":{
+              "type":"string"
+            },
+            "cid_countryname":{
+              "type":"string"
+            },
+            "cid_country":{
+              "type":"string"
+            },
+            "called_number":{
+              "type":"string"
+            },
+            "sid":{
+              "type":"string"
+            },
+            "request_time":{
+              "type":"string"
+            },
+            "cid_e164":{
+              "type":"string"
+            },
+            "event":{
+              "type":"string"
+            }
+          }
+        },
+        "body": {}
+      }
+    }
+  },
   "POST": {}
 }

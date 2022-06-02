@@ -1,14 +1,16 @@
 /* eslint-disable import/no-unresolved */
 import config from "../config/index";
 
-export default async function initCall({ _id, didNumber, initiatorNumber }) {
+export async function initCall({ _id, didNumber, initiatorNumber }) {
   log("info", { _id, didNumber, initiatorNumber });
   // eslint-disable-next-line global-require
   const axios = require("axios");
   const apiKey = "KK232c980690c3cd35bc9ce18db9477d8b";
   const applicationUrl = new URL(config.application_url);
-  const url = `${applicationUrl.origin}/outbound-call/external/call/handle/${_id}`;
+  // console.log("+++++++++++++++++++ the applicaiton url is "+applicationUrl.origin)
+  const url = `${applicationUrl.origin}/v1/organisation/outbound-call/external/call/handle/${_id}`;
   log("info", url);
+  // console.log('URL FOR KOOKOO\n\n\n\n\n'+url);
   const API_URL = new URL("http://kookoo.in/outbound/outbound.php");
   API_URL.searchParams.set("api_key", apiKey);
   API_URL.searchParams.set("phone_no", initiatorNumber);
@@ -20,7 +22,6 @@ export default async function initCall({ _id, didNumber, initiatorNumber }) {
   return axios.default.get(API_URL.href);
 }
 export async function outgoingCallResponse ({ destinationNumber }) {
-  console.log("DESTINATION NUMBER"+destinationNumber);
   log('info', 'start');
   const out = '<?xml version="1.0" encoding="UTF-8"?>' +
     '<response>' +

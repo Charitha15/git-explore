@@ -65,22 +65,22 @@ const getRouteCategory = (routeMapsIndex) => {
 
 const checkApiKeyValidity = async (req) => {
   const apiKey = req.header(HEADER_API_KEY);
-  console.log("******************"+apiKey);
+ // console.log("******************"+apiKey);
   const selectCondition = {
     metro_auth_key: apiKey,
   };
-  console.log("+++++++++++++++++++"+JSON.stringify(selectCondition));
+ // console.log("+++++++++++++++++++"+JSON.stringify(selectCondition));
   const projectCondition = {
     metro_auth_key: 1,
     _id: 0,
   };
-  console.log("+++++++++++++++++++"+JSON.stringify(projectCondition));
+ // console.log("+++++++++++++++++++"+JSON.stringify(projectCondition));
   const isValidAPIKey = await AbstractModels.mongoFindOne(
     Clients,
     selectCondition,
     projectCondition,
   );
-  console.log("********************"+isValidAPIKey);
+ // console.log("********************"+isValidAPIKey);
   return isValidAPIKey;
 };
 
@@ -121,7 +121,7 @@ export const getSessionObj = async (req) => {
   } catch (error) {
     throw ErrorUtils.InvalidSessionToken();
   }
-  console.log("the returned value formthe session is +++++++++++++++"+session);
+//  console.log("the returned value formthe session is +++++++++++++++"+session);
   return session;
 };
 const getRouteObj = (originalUrl, httpMethod) => {
@@ -228,7 +228,7 @@ For each req store req, res audits
 
 export const checks = async (req, res, next) => {
   const { routeCategory } = req.routeObj;
-  // console.log("++++++++++++++++++++++++THIS IS ROUTE CATEGORY          "+routeCategory);
+ // console.log("++++++++++++++++++++++++THIS IS ROUTE CATEGORY          "+routeCategory);
   if (routeCategory === "others") {
     const error = ErrorUtils.InvalidRequest();
     next(error);

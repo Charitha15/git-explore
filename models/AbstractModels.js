@@ -8,7 +8,7 @@ export const mongoFindOne = async (
     .select(selectCondition)
     .lean()
     .exec();
-  console.log("===== from the mongo find one "+JSON.stringify(result));
+  // console.log("===== from the mongo find one "+JSON.stringify(result));
   return result;
 };
 
@@ -103,7 +103,8 @@ export const mongoDeleteMany = async (col, findCondition) => {
 
 export const mongoInsertOne = async (col, doc) => {
   const moongooseDoc = col(doc);
-  await moongooseDoc.save();
+  const result = await moongooseDoc.save();
+  return result;
 };
 
 export const mongoInsertMany = async (col, docs) => {
@@ -115,23 +116,49 @@ export const mongoDistinct = async (col, string, findCondition) => {
   return result;
 };
 
+// export const mongoFindOneAndUpdate = async (
+//   col,
+//   findCondition,
+//   updateCondition,
+//   returnCondition,
+// ) => {
+//   console.log("+++++ the col is"+col);
+//   console.log("+++++ the find cond  is"+JSON.stringify(findCondition));
+//   console.log("+++++ the update cond  is"+JSON.stringify(updateCondition));
+//   const result = await col.findOneAndUpdate(
+//     findCondition,
+//     updateCondition,
+//     returnCondition,
+//   );
+//   console.log("+++++++++++++++++++FIND AND UPDATE"+ result);
+//   return result;
+  
+// };
 export const mongoFindOneAndUpdate = async (
   col,
-  findCondition,
+  selectCondition,
   updateCondition,
-  returnCondition,
+  returnCondition
 ) => {
-  console.log("+++++ the col is"+JSON.stringify(col));
-  console.log("+++++ the find cond  is"+JSON.stringify(findCondition));
-  console.log("+++++ the update cond  is"+JSON.stringify(updateCondition));
-  const result = await col.findOneAndUpdate(
-    findCondition,
-    updateCondition,
-    returnCondition,
-  );
-  console.log("+++++++++++++++++++FIND AND UPDATE"+ result);
-  return result;
-  
+  return new Promise(async (resolve, reject) => {
+    try {
+     // console.log("TEsting ERROR -----------------------------",col,selectCondition,updateCondition);
+      col.findOneAndUpdate(
+        selectCondition,
+        updateCondition,
+        returnCondition,
+        function (error, res) {
+          if (error) {
+            reject(new Error(error));
+          } else {
+            resolve(res);
+          }
+        }
+      );
+    } catch (error) {
+      reject(new Error(error));
+    }
+  });
 };
 
 export const mongoFindOneAndRemove = async (col, findCondition) => {

@@ -10,57 +10,6 @@
         "body": {}
       }
     },
-    "/v1/organisation/outbound-call/external/call/handle/:param": {
-      "eventType": "OUTBOUNDCALL_HANDLE",
-      "roles": [
-        "user","admin"
-      ],
-      "schema": {
-        "query": {
-          "$schema": "https://json-schema.org/draft-04/schema#",
-          "title": "GET_DIDNUMBERS_LIST_QUERY",
-          "properties":{
-            "outbound_sid":{
-              "type":"string"
-            },
-            "cid":{
-              "type":"string"
-            },
-            "cid_type":{
-              "type":"string"
-            },
-            "operator":{
-              "type":"string"
-            },
-            "circle":{
-              "type":"string"
-            },
-            "cid_countryname":{
-              "type":"string"
-            },
-            "cid_country":{
-              "type":"string"
-            },
-            "called_number":{
-              "type":"string"
-            },
-            "sid":{
-              "type":"string"
-            },
-            "request_time":{
-              "type":"string"
-            },
-            "cid_e164":{
-              "type":"string"
-            },
-            "event":{
-              "type":"string"
-            }
-          }
-        },
-        "body": {}
-      }
-    },
     "/v1/organisation/outbound-call/numbers/list/:param":{
       "eventType":"GET_DIDNUMBERS_LIST",
       "roles": [
@@ -108,7 +57,30 @@
       }
     }
   },
-  "POST": {},
+  "POST": {
+    "/v1/organisation/outbound-call/init/:param":{
+      "eventType": "CALL_INIT_EVENT",
+      "roles": [
+        "user", "admin"
+      ],
+      "schema": {
+        "query": {},
+        "body": {
+          "$schema": "https://json-schema.org/draft-04/schema#",
+          "title": "CALL_INIT_BODY",
+          "type": "object",
+          "properties": {
+            "didId": {
+              "type": "string"
+            },
+            "number": {
+              "type": "string"
+            }
+          }
+        }
+      }
+  }
+},
   "PUT": {
     "/v1/organisation/outbound-call/user/status/:param":{
       "eventType": "OUTBOUND_CALL_STATUS",

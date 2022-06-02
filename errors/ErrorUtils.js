@@ -151,3 +151,30 @@ export function redisConnectionError() {
     RESPONSE_STATUS_500_INTERNAL_SERVER_ERROR,
   );
 }
+
+export function organisaitonNotExists()
+{
+  return new ErrorUtils(
+    organisaitonNotExists,
+    ErrorType.ORGANISATION_NOT_EXISTS,
+    RESPONSE_STATUS_404_NOT_FOUND
+  );
+}
+
+export function businessDidNumberNotFound()
+{
+  return new ErrorUtils(
+    businessDidNumberNotFound,
+    ErrorType.BUSINESS_DID_NUMBER_NOT_FOUND,
+    RESPONSE_STATUS_404_NOT_FOUND
+  );
+}
+
+export function UnableCallSameNo()
+{
+  return new ErrorUtils(
+    UnableCallSameNo,
+    ErrorType.BUSINESS_DID_NUMBER_UNABLE_CALL_SAME_NO,
+    RESPONSE_STATUS_400_BAD_REQUEST
+  )
+}

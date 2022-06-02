@@ -8,7 +8,6 @@ export const validate = (req, res, next) => {
   const bodySchema = routeObj.schema?.body;
 
   const isValidReqQuery = jsValidator.validate(query, querySchema);
-  console.log("+++++++++CHECKING QUERY"+JSON.stringify(isValidReqQuery));
   const isValidReqBody = jsValidator.validate(body, bodySchema);
   if (!isValidReqQuery.valid) {
     next(ErrorUtils.InvalidSchemaError(JSON.stringify(isValidReqQuery.errors)));
